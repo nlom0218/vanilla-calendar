@@ -1,21 +1,35 @@
+export type CalendarStorage = {
+  day: number;
+  dayOfWeek: number;
+  date: Date;
+  state: 'prev' | 'next' | 'cur';
+}[];
+
 class Calendar {
-  year;
-  month;
+  #year;
+  #month;
 
   constructor(year: number, month: number) {
-    this.year = year;
-    this.month = month;
+    this.#year = year;
+    this.#month = month;
   }
 
   getCalendarStorage = () => {
     return [
-      ...this.getPrevMonthLastWeekDays(this.year, this.month),
-      ...this.getCurMonthDays(this.year, this.month),
-      ...this.getNextMonthFirstWeekDays(this.year, this.month),
+      ...this.getPrevMonthLastWeekDays(this.#year, this.#month),
+      ...this.getCurMonthDays(this.#year, this.#month),
+      ...this.getNextMonthFirstWeekDays(this.#year, this.#month),
     ];
   };
 
-  private getPrevMonthLastWeekDays = (year: number, month: number) => {
+  getYear = () => this.#year;
+
+  getMonth = () => this.#month;
+
+  private getPrevMonthLastWeekDays = (
+    year: number,
+    month: number
+  ): CalendarStorage => {
     const prevMonthLastDateObject = new Date(year, month - 1, 0);
 
     const prevYear = prevMonthLastDateObject.getFullYear(); // 이전 달의 년도
@@ -38,7 +52,7 @@ class Calendar {
     });
   };
 
-  private getCurMonthDays = (year: number, month: number) => {
+  private getCurMonthDays = (year: number, month: number): CalendarStorage => {
     const curMonthFirstDateObject = new Date(year, month - 1); // 이번 달의 첫 번째 날
     const curMonthLastDateObject = new Date(year, month, 0); // 이번 달의 마지막 날
 
@@ -52,13 +66,16 @@ class Calendar {
       return {
         day,
         dayOfWeek,
-        date: new Date(year, month, day),
+        date: new Date(year, month - 1, day),
         state: 'cur',
       };
     });
   };
 
-  private getNextMonthFirstWeekDays = (year: number, month: number) => {
+  private getNextMonthFirstWeekDays = (
+    year: number,
+    month: number
+  ): CalendarStorage => {
     const nextMonthFirstDateObject = new Date(year, month);
 
     const nextYear = nextMonthFirstDateObject.getFullYear(); // 다음 달의 년도
