@@ -1,0 +1,52 @@
+.schedule-container {
+  padding: 20px;
+  border-radius: 20px;
+
+  background-color: #ffffff;
+
+  font-size: 14px;
+
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.schedule-year-month {
+  padding: 20px 20px 40px;
+
+  font-size: 24px;
+}
+
+.schedule-day-of-weeks {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 5px;
+}
+
+.schedule-day-of-week {
+  text-align: center;
+}
+
+.schedule-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+
+  background-color: #e5e5e5;
+}
+
+.schedule-calendar-item {
+  background-color: #ffffff;
+  min-height: 120px;
+}
+
+.schedule-calendar-day {
+  width: 30px;
+  height: 30px;
+
+  margin: 4px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

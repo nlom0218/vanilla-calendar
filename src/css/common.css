@@ -1,0 +1,37 @@
+.sunday {
+  color: rgb(200, 55, 55);
+}
+
+.saturday {
+  color: rgb(85, 85, 198);
+}
+
+.weekday {
+  color: rgb(35, 35, 35);
+}
+
+.prev-month,
+.next-month {
+  opacity: 0.3;
+}
+
+.today {
+  background-color: rgb(35, 35, 35);
+  color: rgb(255, 255, 255);
+
+  border-radius: 50%;
+}
+
+.selected {
+  background-color: #000000;
+
+  border-radius: 0;
+  color: #ffffff;
+}
+
+.title {
+  font-size: 28px;
+  margin-bottom: 20px;
+
+  text-align: center;
+}
