@@ -1,3 +1,5 @@
+import format from '../utils/format';
+
 export type CalendarStorage = {
   day: number;
   dayOfWeek: number;
@@ -25,6 +27,13 @@ class Calendar {
   getYear = () => this.#year;
 
   getMonth = () => this.#month;
+
+  isToday = (date: Date) => {
+    const today = format.date(new Date());
+    const inputDate = format.date(date);
+
+    return today === inputDate;
+  };
 
   private getPrevMonthLastWeekDays = (
     year: number,
