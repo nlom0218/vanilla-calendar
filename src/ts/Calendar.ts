@@ -35,6 +35,35 @@ class Calendar {
     return today === inputDate;
   };
 
+  shiftMonth = (type: 'next' | 'prev' | 'today') => {
+    if (type === 'today') {
+      const today = new Date();
+
+      this.#year = today.getFullYear();
+      this.#month = today.getMonth() + 1;
+
+      return;
+    }
+
+    const changedMonth = this.#month + (type === 'next' ? +1 : -1);
+
+    if (changedMonth === 0) {
+      this.#year -= 1;
+      this.#month = 12;
+
+      return;
+    }
+
+    if (changedMonth === 13) {
+      this.#year += 1;
+      this.#month = 1;
+
+      return;
+    }
+
+    this.#month = changedMonth;
+  };
+
   private getPrevMonthLastWeekDays = (
     year: number,
     month: number
