@@ -1,0 +1,21 @@
+.shift-month-button-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 16px;
+
+  color: #5c5c5c;
+}
+
+.shift-month-button {
+  background-color: #ffffff;
+  border: none;
+
+  cursor: pointer;
+}
+
+.shift-month-arrow-button {
+  width: 20px;
+  height: 20px;
+}

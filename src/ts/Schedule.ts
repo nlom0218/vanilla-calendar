@@ -34,7 +34,12 @@ class Schedule {
 
     const yearMonthTemplate = `
       <div class="schedule-year-month">
-        ${this.#calendar.getYear()}년 ${this.#calendar.getMonth()}월
+        <span>${this.#calendar.getYear()}년 ${this.#calendar.getMonth()}월</span>
+        <div class="shift-month-button-container">
+          <button class="shift-month-button shift-mont-today-button" data-type="today">TODAY</button>
+          <button class="shift-month-button shift-mont-arrow-button" data-type="prev">◀︎</button>
+          <button class="shift-month-button shift-mont-arrow-button" data-type="next">▶︎</button>
+        </div>
       </div>
     `;
 
