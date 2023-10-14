@@ -1,6 +1,8 @@
 import format from '../utils/format';
 import DatePickerCalendar from './DatePickerCalendar';
 import { $ } from './dom';
+import handleShiftMonth from './handler/handleShiftMonth';
+import yearMonthTemplate from './template/yearMonthTemplate';
 
 class DatePicker {
   #datePickerCalendar;
@@ -17,11 +19,6 @@ class DatePicker {
   initDatePicker = () => {
     this.#datePickerCalendar.init();
     this.#isOpenCalendar = false;
-  };
-
-  remove = () => {
-    $('.calendar').innerHTML = '';
-    this.unregisterEventListener();
   };
 
   render = () => {
@@ -88,12 +85,6 @@ class DatePicker {
       );
     };
 
-    const yearMonthTemplate = `
-			<div class="date-picker-year-month">
-				${this.#datePickerCalendar.getYear()}년 ${this.#datePickerCalendar.getMonth()}월
-			</div>
-		`;
-
     const calendarTemplate = `
 			<ul class="date-picker-calendar">
 				${['일', '월', '화', '수', '목', '금', '토']
@@ -117,9 +108,13 @@ class DatePicker {
 		`;
 
     $('.date-picker-calendar-layout').innerHTML =
-      yearMonthTemplate + calendarTemplate;
+      yearMonthTemplate(
+        'datePicker',
+        this.#datePickerCalendar.getYear(),
+        this.#datePickerCalendar.getMonth()
+      ) + calendarTemplate;
 
-    this.registerCalendarDayEventListener();
+    this.registerCalendarEventListener();
   };
 
   private handleOpenCalender = () => {
@@ -153,19 +148,11 @@ class DatePicker {
     );
   };
 
-  private registerCalendarDayEventListener = () => {
+  private registerCalendarEventListener = () => {
     $('.date-picker-calendar').addEventListener('click', this.handleSelectDate);
-  };
 
-  private unregisterEventListener = () => {
-    $('.date-picker-input-button').removeEventListener(
-      'click',
-      this.handleOpenCalender
-    );
-
-    $('.date-picker-calendar').removeEventListener(
-      'click',
-      this.handleSelectDate
+    $('.shift-month-button-container').addEventListener('click', (event) =>
+      handleShiftMonth(event, this.#datePickerCalendar, this.renderCalendar)
     );
   };
 }
