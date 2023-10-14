@@ -1,5 +1,7 @@
 import Calendar from './Calendar';
 import { $ } from './dom';
+import handleShiftMonth from './handler/handleShiftMonth';
+import yearMonthTemplate from './template/yearMonthTemplate';
 
 class Schedule {
   #calendar;
@@ -37,17 +39,6 @@ class Schedule {
       return 'weekday';
     };
 
-    const yearMonthTemplate = `
-      <div class="schedule-year-month">
-        <span>${this.#calendar.getYear()}년 ${this.#calendar.getMonth()}월</span>
-        <div class="shift-month-button-container">
-          <button class="shift-month-button shift-mont-today-button" data-type="today">TODAY</button>
-          <button class="shift-month-button shift-mont-arrow-button" data-type="prev">◀︎</button>
-          <button class="shift-month-button shift-mont-arrow-button" data-type="next">▶︎</button>
-        </div>
-      </div>
-    `;
-
     const calendarTemplate = `
       <ul class="schedule-day-of-weeks">
       ${['일', '월', '화', '수', '목', '금', '토']
@@ -74,32 +65,25 @@ class Schedule {
       </ul>
     `;
 
-    $('.schedule-container').innerHTML = yearMonthTemplate + calendarTemplate;
+    $('.schedule-container').innerHTML =
+      yearMonthTemplate(
+        'schedule',
+        this.#calendar.getYear(),
+        this.#calendar.getMonth()
+      ) + calendarTemplate;
+
     this.registerEventListener();
   };
 
-  private handleShiftMonth: EventListener = (event) => {
-    const button = event.target;
-
-    if (!(button instanceof HTMLButtonElement)) return;
-
-    const type = button.dataset.type as 'next' | 'prev' | 'today';
-
-    this.#calendar.shiftMonth(type);
-    this.renderCalendar();
-  };
-
   private registerEventListener = () => {
-    $('.shift-month-button-container').addEventListener(
-      'click',
-      this.handleShiftMonth
+    $('.shift-month-button-container').addEventListener('click', (event) =>
+      handleShiftMonth(event, this.#calendar, this.renderCalendar)
     );
   };
 
   private unregisterEventListener = () => {
-    $('.shift-month-button-container').removeEventListener(
-      'click',
-      this.handleShiftMonth
+    $('.shift-month-button-container').removeEventListener('click', (event) =>
+      handleShiftMonth(event, this.#calendar, this.renderCalendar)
     );
   };
 }
