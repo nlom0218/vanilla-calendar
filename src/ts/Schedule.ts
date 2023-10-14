@@ -25,11 +25,6 @@ class Schedule {
     this.renderCalendar();
   };
 
-  remove = () => {
-    $('.calendar').innerHTML = '';
-    this.unregisterEventListener();
-  };
-
   private renderCalendar = () => {
     const getDayOfWeekClassName = (dayOfWeek: number) => {
       if (dayOfWeek === 0) return 'sunday';
@@ -77,12 +72,6 @@ class Schedule {
 
   private registerEventListener = () => {
     $('.shift-month-button-container').addEventListener('click', (event) =>
-      handleShiftMonth(event, this.#calendar, this.renderCalendar)
-    );
-  };
-
-  private unregisterEventListener = () => {
-    $('.shift-month-button-container').removeEventListener('click', (event) =>
       handleShiftMonth(event, this.#calendar, this.renderCalendar)
     );
   };
