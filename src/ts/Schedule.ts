@@ -23,6 +23,11 @@ class Schedule {
     this.renderCalendar();
   };
 
+  remove = () => {
+    $('.calendar').innerHTML = '';
+    this.unregisterEventListener();
+  };
+
   private renderCalendar = () => {
     const getDayOfWeekClassName = (dayOfWeek: number) => {
       if (dayOfWeek === 0) return 'sunday';
@@ -70,6 +75,32 @@ class Schedule {
     `;
 
     $('.schedule-container').innerHTML = yearMonthTemplate + calendarTemplate;
+    this.registerEventListener();
+  };
+
+  private handleShiftMonth: EventListener = (event) => {
+    const button = event.target;
+
+    if (!(button instanceof HTMLButtonElement)) return;
+
+    const type = button.dataset.type as 'next' | 'prev' | 'today';
+
+    this.#calendar.shiftMonth(type);
+    this.renderCalendar();
+  };
+
+  private registerEventListener = () => {
+    $('.shift-month-button-container').addEventListener(
+      'click',
+      this.handleShiftMonth
+    );
+  };
+
+  private unregisterEventListener = () => {
+    $('.shift-month-button-container').removeEventListener(
+      'click',
+      this.handleShiftMonth
+    );
   };
 }
 
