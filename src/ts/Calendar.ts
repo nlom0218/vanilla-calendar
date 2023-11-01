@@ -10,10 +10,14 @@ export type CalendarStorage = {
 class Calendar {
   #year;
   #month;
+  #navigationYear;
+  #navigationMonth;
 
   constructor(year: number, month: number) {
     this.#year = year;
     this.#month = month;
+    this.#navigationYear = year;
+    this.#navigationMonth = month;
   }
 
   getCalendarStorage = () => {
@@ -36,33 +40,50 @@ class Calendar {
   };
 
   shiftMonth = (type: 'next' | 'prev' | 'today') => {
+    let newYear = this.#year;
+    let newMonth = this.#month;
+
     if (type === 'today') {
       const today = new Date();
 
-      this.#year = today.getFullYear();
-      this.#month = today.getMonth() + 1;
-
-      return;
+      newYear = today.getFullYear();
+      newMonth = today.getMonth() + 1;
     }
 
     const changedMonth = this.#month + (type === 'next' ? +1 : -1);
 
-    if (changedMonth === 0) {
-      this.#year -= 1;
-      this.#month = 12;
-
-      return;
+    if (type !== 'today' && changedMonth === 0) {
+      newYear -= 1;
+      newMonth = 12;
     }
 
-    if (changedMonth === 13) {
-      this.#year += 1;
-      this.#month = 1;
-
-      return;
+    if (type !== 'today' && changedMonth === 13) {
+      newYear += 1;
+      newMonth = 1;
     }
 
-    this.#month = changedMonth;
+    if (type !== 'today' && changedMonth > 0 && changedMonth < 13) {
+      newMonth = changedMonth;
+    }
+
+    this.#year = newYear;
+    this.#navigationYear = newYear;
+    this.#month = newMonth;
+    this.#navigationMonth = newMonth;
   };
+
+  navigateYear = (year: number) => (this.#navigationYear = year);
+
+  navigateMonth = (month: number) => (this.#navigationMonth = month);
+
+  navigate = () => {
+    this.#year = this.#navigationYear;
+    this.#month = this.#navigationMonth;
+  };
+
+  getNavigationYear = () => this.#navigationYear;
+
+  getNavigationMonth = () => this.#navigationMonth;
 
   private getPrevMonthLastWeekDays = (
     year: number,
