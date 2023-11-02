@@ -10,6 +10,8 @@
 }
 
 .schedule-year-month {
+  position: relative;
+
   padding: 20px 20px 40px;
 
   font-size: 24px;
@@ -17,6 +19,75 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.schedule-navigation-button {
+  font-size: 16px;
+
+  background-color: transparent;
+  border: none;
+
+  cursor: pointer;
+}
+
+.schedule-navigation {
+  position: absolute;
+
+  top: 50px;
+  width: 300px;
+
+  padding: 20px;
+  border-radius: 8px;
+
+  background-color: #ffffff;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+  font-size: 18px;
+
+  z-index: 5;
+}
+
+.schedule-navigation-year {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+}
+
+.schedule-navigation-year-button {
+  font-size: 16px;
+  border: none;
+  background-color: transparent;
+
+  cursor: pointer;
+}
+
+.schedule-navigation-month-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+
+  font-size: 16px;
+  font-weight: 500;
+  color: rgb(100, 100, 100);
+}
+
+.schedule-month {
+  color: #3b82f6;
+}
+
+.schedule-navigation-month-item {
+  text-align: center;
+
+  padding: 10px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  transition: background-color 0.2s ease;
+}
+
+.schedule-navigation-month-item:hover {
+  background-color: #d7e6ff;
 }
 
 .schedule-day-of-weeks {
